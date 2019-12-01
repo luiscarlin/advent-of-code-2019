@@ -4,10 +4,26 @@ const main = () => {
     .split('\n');
 
   const sum = lines
-    .map(line => Math.floor(+line / 3) - 2)
+    .map(line => calculateFuel(line))
     .reduce((acc, val) => acc + val);
 
   console.log('part 1', sum);
+
+  const sumAllFuel = lines
+    .map(line => getRecursiveFuel(line))
+    .reduce((acc, val) => acc + val);
+
+  console.log('part 2', sumAllFuel);
+};
+
+const calculateFuel = num => {
+  return Math.floor(+num / 3) - 2;
+};
+
+const getRecursiveFuel = (num, sum = 0) => {
+  const fuel = calculateFuel(num);
+
+  return fuel < 0 ? sum : getRecursiveFuel(fuel, (sum += fuel));
 };
 
 if (require.main == module) {
