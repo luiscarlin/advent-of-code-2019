@@ -21,7 +21,8 @@ axios
     headers: { Cookie: `session=${cookie};` },
   })
   .then(response => {
-    console.log(response.data);
+    data = String(response.data).slice(0, -1);
+    console.log(data);
   })
   .catch(error => {
     console.log(error);
