@@ -25,5 +25,7 @@ const getRecursiveFuel = (num, sum = 0) => {
 };
 
 if (require.main == module) {
+  console.time('timer');
   main();
+  console.timeEnd('timer');
 }
