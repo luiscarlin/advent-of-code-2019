@@ -3,26 +3,21 @@ const main = () => {
     .readFileSync('./1.in', 'utf8')
     .split('\n');
 
-  const sum = lines
-    .map(line => calculateFuel(line))
-    .reduce((acc, val) => acc + val);
+  lines = lines.map(Number);
 
-  console.log('part 1', sum);
-
-  const sumAllFuel = lines
-    .map(line => getRecursiveFuel(line))
-    .reduce((acc, val) => acc + val);
-
-  console.log('part 2', sumAllFuel);
+  console.log('part 1', lines.map(calculateFuel).reduce(sum));
+  console.log('part 2', lines.map(getRecursiveFuel).reduce(sum));
 };
 
-const calculateFuel = num => Math.floor(+num / 3) - 2;
+const calculateFuel = num => Math.floor(num / 3) - 2;
 
 const getRecursiveFuel = (num, sum = 0) => {
   const fuel = calculateFuel(num);
 
   return fuel < 0 ? sum : getRecursiveFuel(fuel, (sum += fuel));
 };
+
+const sum = (a, b) => a + b;
 
 if (require.main == module) {
   console.time('timer');
