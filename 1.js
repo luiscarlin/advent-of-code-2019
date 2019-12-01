@@ -16,9 +16,7 @@ const main = () => {
   console.log('part 2', sumAllFuel);
 };
 
-const calculateFuel = num => {
-  return Math.floor(+num / 3) - 2;
-};
+const calculateFuel = num => Math.floor(+num / 3) - 2;
 
 const getRecursiveFuel = (num, sum = 0) => {
   const fuel = calculateFuel(num);
