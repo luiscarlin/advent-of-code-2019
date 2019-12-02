@@ -1,11 +1,27 @@
 const main = () => {
+  console.log('part 1', getOutput(12, 2));
+
+  for (let first = 0; first <= 99; first += 1) {
+    for (let second = 0; second <= 99; second += 1) {
+      const result = getOutput(first, second);
+
+      if (result === 19690720) {
+        console.log('part 2', 100 * first + second);
+        process.exit();
+      }
+    }
+  }
+};
+
+const getOutput = (first, second) => {
   let nums = require('fs')
     .readFileSync('./2.in', 'utf8')
     .split(',')
     .filter(n => n)
     .map(Number);
 
-  console.log(nums);
+  nums[1] = first;
+  nums[2] = second;
 
   for (let i = 0; i < nums.length; i += 4) {
     let opcode = nums[i];
@@ -23,7 +39,7 @@ const main = () => {
         : firstOperand * secondOperand;
   }
 
-  console.log('part 1', nums[0]);
+  return nums[0];
 };
 
 if (require.main == module) {
