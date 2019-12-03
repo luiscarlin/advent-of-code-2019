@@ -30,6 +30,7 @@ const addToGrid = (x, y) => {
 };
 
 const populateGridWithWire = wire => {
+  let points = new Set();
   let prevX = 0;
   let prevY = 0;
 
@@ -43,22 +44,24 @@ const populateGridWithWire = wire => {
     if ('UD'.includes(direction)) {
       for (let y = prevY; y != curY; y += dy[directions[direction]]) {
         if (y == prevY) continue;
-        addToGrid(prevX, y);
+        points.add(`${prevX},${y}`);
       }
     }
 
     if ('RL'.includes(direction)) {
       for (let x = prevX; x != curX; x += dx[directions[direction]]) {
         if (x == prevX) continue;
-        addToGrid(x, prevY);
+        points.add(`${x},${prevY}`);
       }
     }
 
-    addToGrid(curX, curY);
+    points.add(`${curX},${curY}`);
 
     prevX = curX;
     prevY = curY;
   }
+
+  points.forEach(point => addToGrid(...point.split(',')));
 };
 
 const main = () => {
@@ -71,8 +74,6 @@ const main = () => {
 
   populateGridWithWire(wire1.split(','));
   populateGridWithWire(wire2.split(','));
-
-  console.log(grid);
 
   console.log('part 1', findMinManhattan());
 };
