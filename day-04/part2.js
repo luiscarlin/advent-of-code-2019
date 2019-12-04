@@ -41,7 +41,7 @@ if (require.main === module) {
     .split('-')
     .map(Number);
 
-  console.log('part 1', main(start, end));
+  console.log('part 2', main(start, end));
 }
 
 module.exports = (start, end) => {
