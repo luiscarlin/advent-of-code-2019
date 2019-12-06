@@ -5,8 +5,8 @@ const main = (program, input) => {
   let pc = 0;
 
   const getParameterBasedOnMode = (mode, pointer) => {
-    const valueInMemory = memory[pointer];
-    return mode === 0 ? memory[valueInMemory] : valueInMemory;
+    const valueAtPointer = memory[pointer];
+    return mode === 0 ? memory[valueAtPointer] : valueAtPointer;
   };
 
   while (memory[pc] !== 99) {
@@ -51,6 +51,38 @@ const main = (program, input) => {
         output = getParameterBasedOnMode(firstParamMode, pc + 1);
         pc += 2;
         break;
+
+      case 5:
+        const parameter1 = getParameterBasedOnMode(firstParamMode, pc + 1);
+        const parameter2 = getParameterBasedOnMode(secondParamMode, pc + 2);
+
+        pc = parameter1 !== 0 ? parameter2 : pc + 3;
+        break;
+
+      case 6:
+        const parameter1 = getParameterBasedOnMode(firstParamMode, pc + 1);
+        const parameter2 = getParameterBasedOnMode(secondParamMode, pc + 2);
+
+        pc = parameter1 === 0 ? parameter2 : pc + 3;
+        break;
+
+      case 7:
+        const parameter1 = getParameterBasedOnMode(firstParamMode, pc + 1);
+        const parameter2 = getParameterBasedOnMode(secondParamMode, pc + 2);
+        const resultPointer = memory[pc + 3];
+
+        memory[resultPointer] = parameter1 < parameter2 ? 1 : 0;
+        pc += 4;
+        break;
+
+      case 8:
+        const parameter1 = getParameterBasedOnMode(firstParamMode, pc + 1);
+        const parameter2 = getParameterBasedOnMode(secondParamMode, pc + 2);
+        const resultPointer = memory[pc + 3];
+
+        memory[resultPointer] = parameter1 === parameter2 ? 1 : 0;
+        pc += 4;
+        break;
     }
   }
 
@@ -60,7 +92,7 @@ const main = (program, input) => {
 if (require.main === module) {
   const program = require('fs').readFileSync('./input.txt', 'utf8');
 
-  console.log('part 1', main(program, 1));
+  console.log('part 2', main(program, 5));
 }
 
-module.exports = program => main(program, 1);
+module.exports = program => main(program);
