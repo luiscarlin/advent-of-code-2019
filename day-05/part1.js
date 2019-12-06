@@ -58,7 +58,7 @@ const main = (program, input) => {
 };
 
 if (require.main === module) {
-  const program = require('fs').readFileSync('./input.txt', 'utf8');
+  const program = require('fs').readFileSync(`${__dirname}/input.txt`, 'utf8');
 
   console.log('part 1', main(program, 1));
 }

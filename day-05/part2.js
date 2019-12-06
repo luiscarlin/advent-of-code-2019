@@ -90,9 +90,9 @@ const main = (program, input) => {
 };
 
 if (require.main === module) {
-  const program = require('fs').readFileSync('./input.txt', 'utf8');
+  const program = require('fs').readFileSync(`${__dirname}/input.txt`, 'utf8');
 
   console.log('part 2', main(program, 5));
 }
 
-module.exports = program => main(program);
+module.exports = program => main(program, 5);
