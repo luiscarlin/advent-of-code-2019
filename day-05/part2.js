@@ -23,25 +23,25 @@ const main = (program, input) => {
 
     switch (opcode) {
       case 1:
-        const parameter1 = getParameterBasedOnMode(firstParamMode, pc + 1);
-        const parameter2 = getParameterBasedOnMode(secondParamMode, pc + 2);
-        const resultPointer = memory[pc + 3];
+        parameter1 = getParameterBasedOnMode(firstParamMode, pc + 1);
+        parameter2 = getParameterBasedOnMode(secondParamMode, pc + 2);
+        resultPointer = memory[pc + 3];
 
         memory[resultPointer] = parameter1 + parameter2;
         pc += 4;
         break;
 
       case 2:
-        const parameter1 = getParameterBasedOnMode(firstParamMode, pc + 1);
-        const parameter2 = getParameterBasedOnMode(secondParamMode, pc + 2);
-        const resultPointer = memory[pc + 3];
+        parameter1 = getParameterBasedOnMode(firstParamMode, pc + 1);
+        parameter2 = getParameterBasedOnMode(secondParamMode, pc + 2);
+        resultPointer = memory[pc + 3];
 
         memory[resultPointer] = parameter1 * parameter2;
         pc += 4;
         break;
 
       case 3:
-        const resultPointer = memory[pc + 1];
+        resultPointer = memory[pc + 1];
 
         memory[resultPointer] = input;
         pc += 2;
@@ -53,32 +53,32 @@ const main = (program, input) => {
         break;
 
       case 5:
-        const parameter1 = getParameterBasedOnMode(firstParamMode, pc + 1);
-        const parameter2 = getParameterBasedOnMode(secondParamMode, pc + 2);
+        parameter1 = getParameterBasedOnMode(firstParamMode, pc + 1);
+        parameter2 = getParameterBasedOnMode(secondParamMode, pc + 2);
 
         pc = parameter1 !== 0 ? parameter2 : pc + 3;
         break;
 
       case 6:
-        const parameter1 = getParameterBasedOnMode(firstParamMode, pc + 1);
-        const parameter2 = getParameterBasedOnMode(secondParamMode, pc + 2);
+        parameter1 = getParameterBasedOnMode(firstParamMode, pc + 1);
+        parameter2 = getParameterBasedOnMode(secondParamMode, pc + 2);
 
         pc = parameter1 === 0 ? parameter2 : pc + 3;
         break;
 
       case 7:
-        const parameter1 = getParameterBasedOnMode(firstParamMode, pc + 1);
-        const parameter2 = getParameterBasedOnMode(secondParamMode, pc + 2);
-        const resultPointer = memory[pc + 3];
+        parameter1 = getParameterBasedOnMode(firstParamMode, pc + 1);
+        parameter2 = getParameterBasedOnMode(secondParamMode, pc + 2);
+        resultPointer = memory[pc + 3];
 
         memory[resultPointer] = parameter1 < parameter2 ? 1 : 0;
         pc += 4;
         break;
 
       case 8:
-        const parameter1 = getParameterBasedOnMode(firstParamMode, pc + 1);
-        const parameter2 = getParameterBasedOnMode(secondParamMode, pc + 2);
-        const resultPointer = memory[pc + 3];
+        parameter1 = getParameterBasedOnMode(firstParamMode, pc + 1);
+        parameter2 = getParameterBasedOnMode(secondParamMode, pc + 2);
+        resultPointer = memory[pc + 3];
 
         memory[resultPointer] = parameter1 === parameter2 ? 1 : 0;
         pc += 4;
