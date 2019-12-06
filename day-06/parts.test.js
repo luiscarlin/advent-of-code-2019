@@ -22,7 +22,7 @@ describe('day06', () => {
     });
   });
   describe('part2', () => {
-    it('finds the minimum number of steps from YOU to SAN', () => {
+    it('finds the minimum number of steps between YOU to SAN', () => {
       const answer = part2([
         'COM)B',
         'B)C',
