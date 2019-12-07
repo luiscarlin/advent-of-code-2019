@@ -4,20 +4,22 @@ const main = instructions => {
   const inputPermutations = permute([0, 1, 2, 3, 4]);
 
   let maxOutput = 0;
+  let bestPhase = [];
 
-  for (let permutation of inputPermutations) {
-    const a = intCode(instructions, [permutation[0], 0]);
-    const b = intCode(instructions, [permutation[1], a]);
-    const c = intCode(instructions, [permutation[2], b]);
-    const d = intCode(instructions, [permutation[3], c]);
-    const output = intCode(instructions, [permutation[4], d]);
+  for (let phase of inputphases) {
+    const a = intCode(instructions, [phase[0], 0]);
+    const b = intCode(instructions, [phase[1], a]);
+    const c = intCode(instructions, [phase[2], b]);
+    const d = intCode(instructions, [phase[3], c]);
+    const output = intCode(instructions, [phase[4], d]);
 
     if (output > maxOutput) {
       maxOutput = output;
+      bestPhase = phase;
     }
   }
 
-  return maxOutput;
+  return { maxOutput, bestPhase };
 };
 
 const permute = inputArray => {
@@ -40,7 +42,7 @@ if (require.main === module) {
     `${__dirname}/input.txt`,
     'utf8'
   );
-  console.log('part 1', main(instructions));
+  console.log('part 2', main(instructions).maxOutput);
 }
 
 module.exports = instructions => {

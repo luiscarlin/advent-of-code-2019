@@ -44,7 +44,7 @@ const main = (program, input = []) => {
         resultPointer = memory[pc + 1];
 
         memory[resultPointer] = input.shift();
-        a;
+
         pc += 2;
         break;
 
@@ -89,11 +89,5 @@ const main = (program, input = []) => {
 
   return output;
 };
-
-if (require.main === module) {
-  const program = require('fs').readFileSync(`${__dirname}/input.txt`, 'utf8');
-
-  console.log('part 2', main(program, 5));
-}
 
 module.exports = (program, input = [5]) => main(program, input);
