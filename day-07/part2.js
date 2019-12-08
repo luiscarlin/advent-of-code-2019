@@ -66,44 +66,19 @@ const main = instructions => {
   return { maxOutput, bestPhase };
 };
 
-// const permute = inputArray => {
-//   var result = inputArray.reduce(function permute(res, item, key, arr) {
-//     return res.concat(
-//       (arr.length > 1 &&
-//         arr
-//           .slice(0, key)
-//           .concat(arr.slice(key + 1))
-//           .reduce(permute, [])
-//           .map(perm => [item].concat(perm))) ||
-//         item
-//     );
-//   }, []);
-//   return result;
-// };
-
-const permute = (set = []) => {
-  const permutations = [];
-
-  const permute = (candidates = [], sequence = []) => {
-    if (!candidates.length) {
-      permutations.push(sequence);
-
-      return;
-    }
-
-    for (let i = 0; i < candidates.length; i++) {
-      const candidate = candidates[i];
-
-      permute(
-        [...candidates.filter(x => x !== candidate)],
-        [...sequence, candidate]
-      );
-    }
-  };
-
-  permute(set);
-
-  return permutations;
+const permute = inputArray => {
+  var result = inputArray.reduce(function permute(res, item, key, arr) {
+    return res.concat(
+      (arr.length > 1 &&
+        arr
+          .slice(0, key)
+          .concat(arr.slice(key + 1))
+          .reduce(permute, [])
+          .map(perm => [item].concat(perm))) ||
+        item
+    );
+  }, []);
+  return result;
 };
 
 if (require.main === module) {
