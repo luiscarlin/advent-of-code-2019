@@ -3,11 +3,8 @@ const main = (image, width = 25, height = 6) => {
 
   let i = 0;
 
-  let layerWithMinZeros = {
-    zeros: 100000,
-    ones: 0,
-    twos: 0,
-  };
+  let layers = [];
+  let finalImage = [];
 
   while (true) {
     const start = i * width * height;
@@ -19,25 +16,42 @@ const main = (image, width = 25, height = 6) => {
       break;
     }
 
-    const layerObj = {
-      zeros: layer.filter(char => char === '0').length,
-      ones: layer.filter(char => char === '1').length,
-      twos: layer.filter(char => char === '2').length,
-    };
-
-    if (layerObj.zeros < layerWithMinZeros.zeros) {
-      layerWithMinZeros = { ...layerObj };
-    }
+    layers.push(layer);
 
     i++;
   }
 
-  return layerWithMinZeros.ones * layerWithMinZeros.twos;
+  for (let i = 0; i < width * height; i += 1) {
+    const layeredCell = layers.map(layer => layer[i]);
+
+    let cellValue = 0;
+
+    for (let cell of layeredCell) {
+      if (cell !== '2') {
+        cellValue = cell;
+        break;
+      }
+    }
+    finalImage.push(cellValue);
+  }
+
+  for (let cellIndex = 0; cellIndex < finalImage.length; cellIndex++) {
+    const char = finalImage[cellIndex];
+    if (char === '0') {
+      process.stdout.write(' ');
+    } else {
+      process.stdout.write('#');
+    }
+
+    if ((cellIndex + 1) % width === 0) {
+      process.stdout.write('\n');
+    }
+  }
 };
 
 if (require.main === module) {
   const image = require('fs').readFileSync(`${__dirname}/input.txt`, 'utf8');
-  console.log('part 2', main(image));
+  console.log('part 2', main(image, 25, 6));
 }
 
 module.exports = main;
