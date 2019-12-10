@@ -2,8 +2,8 @@ const part1 = require('./part1');
 
 describe('day 10', () => {
   describe('part 1', () => {
-    it('test1', () => {
-      const input = '.#..#\n .....\n#####\n....#\n...##';
+    it.only('test1', () => {
+      const input = '.#..#\n.....\n#####\n....#\n...##';
 
       const expectedOutput = {
         location: [3, 4],
