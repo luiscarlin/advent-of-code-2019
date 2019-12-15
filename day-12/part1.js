@@ -1,44 +1,60 @@
 const main = input => {
-  const something = input
+  const moons = [];
+  const moonNames = ['io', 'europa', 'ganymede', 'callisto'];
+
+  const inputs = input
     .split('\n')
     .map(line => line.slice(1, -1))
     .map(item => item.split(',').map(item => item.trim().slice(2)));
 
-  let moon1 = {
-    x: something[0][0],
-    y: something[0][1],
-    z: something[0][2],
-    dx: 0,
-    dy: 0,
-    dz: 0,
-  };
-  let moon2 = {
-    x: something[1][0],
-    y: something[1][1],
-    z: something[1][2],
-    dx: 0,
-    dy: 0,
-    dz: 0,
-  };
-  let moon3 = {
-    x: something[2][0],
-    y: something[2][1],
-    z: something[2][2],
-    dx: 0,
-    dy: 0,
-    dz: 0,
-  };
-  let moon4 = {
-    x: something[3][0],
-    y: something[3][1],
-    z: something[3][2],
-    dx: 0,
-    dy: 0,
-    dz: 0,
-  };
+  inputs.forEach((moon, index) => {
+    moons.push({
+      name: moonNames[index],
+      x: +moon[0],
+      y: +moon[1],
+      z: +moon[2],
+      dx: 0,
+      dy: 0,
+      dz: 0,
+    });
+  });
 
-  console.log(something);
-  return input;
+  const iterations = 1000;
+
+  for (let i = 0; i < iterations; i++) {
+    moons.forEach(moon => {
+      moons
+        .filter(item => item.name !== moon.name)
+        .forEach(otherMoon => {
+          moon.dx += moon.x > otherMoon.x ? -1 : moon.x < otherMoon.x ? 1 : 0;
+          moon.dy += moon.y > otherMoon.y ? -1 : moon.y < otherMoon.y ? 1 : 0;
+          moon.dz += moon.z > otherMoon.z ? -1 : moon.z < otherMoon.z ? 1 : 0;
+        });
+    });
+
+    moons.forEach(moon => {
+      moon.x += moon.dx;
+      moon.y += moon.dy;
+      moon.z += moon.dz;
+    });
+  }
+
+  return calculateEnergy(moons);
+};
+
+const calculateEnergy = moons => {
+  let total = 0;
+
+  moons.forEach(moon => {
+    let potentialEnergy =
+      Math.abs(moon.x) + Math.abs(moon.y) + Math.abs(moon.z);
+    let kineticEnergy =
+      Math.abs(moon.dx) + Math.abs(moon.dy) + Math.abs(moon.dz);
+
+    total += potentialEnergy * kineticEnergy;
+  });
+
+  return total;
 };
 
 if (require.main === module) {
