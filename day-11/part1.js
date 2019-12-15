@@ -23,11 +23,16 @@ const IntCode = require('./intcode');
 
 const DEFAULT_PANEL_COLOR = 0;
 
+const UP = { dx: 0, dy: 1 };
+const LEFT = { dx: -1, dy: 0 };
+const DOWN = { dx: 0, dy: -1 };
+const RIGHT = { dx: 1, dy: 0 };
+
 const main = instructions => {
   let panels = {};
   const intCode = new IntCode(instructions);
 
-  const position = { x: 0, y: 0, dx: 0, dy: -1 };
+  const position = { x: 0, y: 0, direction: UP };
 
   while (true) {
     let currentPanelColor =
@@ -46,24 +51,18 @@ const main = instructions => {
 
     const rotate = turn === 0 ? 'left' : 'right';
 
-    const dx =
-      position.dx === 0
-        ? rotate === 'left'
-          ? position.dy
-          : position.dy * -1
-        : 0;
-    const dy =
-      position.dy === 0
-        ? rotate === 'left'
-          ? position.dx * -1
-          : position.dx
-        : 0;
+    if (position.direction === UP) {
+      position.direction = rotate === 'left' ? LEFT : RIGHT;
+    } else if (position.direction === LEFT) {
+      position.direction = rotate === 'left' ? DOWN : UP;
+    } else if (position.direction === DOWN) {
+      position.direction = rotate === 'left' ? RIGHT : LEFT;
+    } else if (position.direction === RIGHT) {
+      position.direction = rotate === 'left' ? UP : DOWN;
+    }
 
-    position.dx = dx;
-    position.dy = dy;
-
-    position.x += position.dx;
-    position.y += position.dy;
+    position.x += position.direction.dx;
+    position.y += position.direction.dy;
   }
 
   return Object.keys(panels).length;
