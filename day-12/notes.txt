@@ -1,0 +1,26 @@
+position of each moon
+simulate motion of each moon
+
+position = (x, y, z)
+velocity = (dx, dy, dz)
+velocity for each moon starts at 0
+
+simulate in time steps
+
+start of time step #1
+  - update velocity by applying gravity for all moons
+  - update position of every moon using their velocity
+end of time step #1
+
+gravity: 
+- grab a pair of moons
+- for each (x, y, z) axis
+  - velocity for each moon changes by +1 or -1
+  - if Moon1 position x = 5 and Moon2 position x = 1 => Moon1 velocity x+=1 and Moon2 velocity x-=1
+    - if same, then no changes
+
+potential energy = sum of absolute values of positions x, y , z
+kinetic energy = sum of absolute values of velocities x, y , z
+total energy = potential + kinetic
+
+find total energy in system after 1000 steps
