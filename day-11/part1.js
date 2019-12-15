@@ -46,7 +46,12 @@ const main = instructions => {
 
     const rotate = turn === 0 ? 'left' : 'right';
 
-    const dx = po ? (rotate === 'left' ? position.dy : position.dy * -1) : 0;
+    const dx =
+      position.dx === 0
+        ? rotate === 'left'
+          ? position.dy
+          : position.dy * -1
+        : 0;
     const dy =
       position.dy === 0
         ? rotate === 'left'
