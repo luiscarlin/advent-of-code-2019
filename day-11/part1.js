@@ -1,24 +1,3 @@
-/*
-inputs:
-- 0 => robot on black panel
-- 1 => robot on white panel
-
-outpus:
-- 0 => paint the panel black
-- 1 => paint the panel white
-- 0 => turn left 90 degrees
-- 1 => turn right 90 degrees
-
-
-- after turn, move exacly 1 panel
-- start facing up
-- Do not restart the Intcode computer inside the robot during this process.
-- start with all black panels
-
-- black panels = .
-- white panels = #
-*/
-
 const IntCode = require('./intcode');
 
 const DEFAULT_PANEL_COLOR = 0;
