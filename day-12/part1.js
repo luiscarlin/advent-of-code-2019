@@ -3,7 +3,7 @@ const main = input => {
 };
 
 if (require.main === module) {
-  const input = require('fs').readFileSync(`${__filename}/input.txt`);
+  const input = require('fs').readFileSync(`${__dirname}/input.txt`, 'utf8');
   console.log('part 1', main(input));
 }
 
