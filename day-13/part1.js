@@ -1,5 +1,18 @@
+const intcode = require('./intcode');
+
 const main = input => {
-  return input;
+  const output = intcode(input).split(',');
+
+  let numBlocks = 0;
+  output.forEach((num, index) => {
+    if ((index + 1) % 3 === 0) {
+      if (num === '2') {
+        numBlocks++;
+      }
+    }
+  });
+
+  return numBlocks;
 };
 
 if (require.main === module) {

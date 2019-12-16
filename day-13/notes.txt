@@ -1,0 +1,11 @@
+- draws tiles on a grid
+- 1: x position (distance from left)
+- 2: y position (distance from top)
+- 3: tile id
+  - 0 => empty
+  - 1 => wall
+  - 2 => block
+  - 3 => horizontal paddle
+  - 4 => ball
+
+How many block tiles are on the screen when the game exits

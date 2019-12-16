@@ -15,4 +15,6 @@ echo 'commit'
 git add ${dirname}
 git commit -m "auto start day ${num}"
 
+cd "./${dirname}"
+
 echo 'done!'
