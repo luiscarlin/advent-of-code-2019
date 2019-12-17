@@ -54,11 +54,10 @@ class IntCodeComputer {
     return this.output.shift();
   }
 
-  execute(input) {
-    if (input) {
-      this.inputQueue.push(input);
-    }
-
+  pushToInput(input) {
+    this.inputQueue.push(input);
+  }
+  execute() {
     while (!this.terminated) {
       const instruction = `${this.accessMemory(this.pc)}`.padStart(5, '0');
       const opcode = +instruction.slice(3);
