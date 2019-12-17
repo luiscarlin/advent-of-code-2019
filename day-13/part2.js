@@ -1,9 +1,12 @@
-const intcode = require('./intcode');
+const IntcodeComputer = require('./IntcodeComputer');
 
-const main = input => {
-  const output = intcode(input).split(',');
+const main = instructions => {
+  let computer = new IntcodeComputer(instructions);
 
-  let numBlocks = 0;
+  while (!computer.terminated) {
+    computer.execute();
+  }
+
   output.forEach((num, index) => {
     if ((index + 1) % 3 === 0) {
       if (num === '2') {
@@ -16,7 +19,7 @@ const main = input => {
 };
 
 if (require.main === module) {
-  const input = require('fs').readFileSync(`${__dirname}/input.txt`, 'utf8');
+  const input = require('fs').readFileSync(`${__dirname}/input2.txt`, 'utf8');
   console.log('part 2', main(input));
 }
 

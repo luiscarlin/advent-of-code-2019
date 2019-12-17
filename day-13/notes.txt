@@ -9,3 +9,11 @@
   - 4 => ball
 
 How many block tiles are on the screen when the game exits
+
+part 2:
+- set memory[0] to 2
+- input: 
+  - 0 => neutral position
+  - -1 => left
+  - 1 => right
+  - if output === X=-1, Y=0 => score
