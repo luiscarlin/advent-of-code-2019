@@ -1,7 +1,37 @@
+const getOreCount = (formulas, chemical, amountNeeded, extras = {}) => {
+  const amountInExtras = extras[chemical] || 0;
+
+  if (amountInExtras > 0) {
+    if (amountInExtras >= amountNeeded) {
+      extras[chemical] -= amountNeeded;
+      return 0;
+    } else {
+      amountNeeded = amountNeeded - amountInExtras;
+      extras[chemical] = 0;
+    }
+  }
+
+  const amountProduced = formulas[chemical].amount;
+
+  const multiplier = Math.ceil(amountNeeded / amountProduced);
+
+  extras[chemical] = multiplier * amountProduced - amountNeeded;
+  const recipe = formulas[chemical].recipe;
+
+  return recipe
+    .map(({ amount, element }) => {
+      if (element == 'ORE') {
+        return amount * multiplier;
+      }
+      return getOreCount(formulas, element, amount * multiplier, extras);
+    })
+    .reduce((acc, a) => acc + a);
+};
+
 const main = input => {
   const formulas = getFormulas(input);
 
-  console.log(formulas);
+  return getOreCount(formulas, 'FUEL', 1);
 };
 
 const getFormulas = lines => {
@@ -13,11 +43,18 @@ const getFormulas = lines => {
         .trim()
         .split(' ');
 
-      acc[[num, name]] = [];
+      acc[name] = {
+        amount: +num,
+        recipe: [],
+      };
 
       elementList.forEach(otherElement => {
         const [num1, name1] = otherElement.trim().split(' ');
-        acc[[num, name]].push(`${num1},${name1}`);
+
+        acc[name].recipe.push({
+          amount: +num1,
+          element: name1,
+        });
       });
 
       return acc;
