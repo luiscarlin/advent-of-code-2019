@@ -18,8 +18,6 @@ const printFull = grid => {
   for (let y = minY; y <= maxY; y++) {
     for (let x = minX; x <= maxX; x++) {
       const value = grid[[x, y]];
-
-      // process.stdout.write(`(${x},${y}`);
       process.stdout.write(charToPrint[value] || 'O');
     }
     console.log();
@@ -31,17 +29,14 @@ const print = (grid, startX, startY) => {
 
   process.stdout.write('\ntop row\n');
 
-  // check if row x = 0 is all #
   for (let dx = 0; dx < 100; dx++) {
     const value = grid[[startX + dx, startY]];
-    // process.stdout.write(`(${startX + dx},${startY}`);
     process.stdout.write(charToPrint[value] || 'o');
   }
   process.stdout.write('\nleft column\n');
 
   for (let dy = 0; dy < 100; dy++) {
     const value = grid[[startX, startY + dy]];
-    // process.stdout.write(`(${startX},${startY + dy}`);
     process.stdout.write(charToPrint[value] || 'o');
   }
 
@@ -82,12 +77,10 @@ const main = instructions => {
 
     if (!allTopRow) {
       startY += 1;
-      // console.log('moving y');
     }
 
     if (!allLeftColInBeam) {
       startX += 1;
-      // console.log('moving x');
     }
 
     if (allTopRow && allLeftColInBeam) {
@@ -119,25 +112,6 @@ const topRowInBeam = (grid, startX, startY) => {
       return false;
     }
   }
-  return true;
-};
-
-const topLeftCornerFound = (grid, startX, startY) => {
-  // for point in left
-  // check if row y = 0 is all #
-  for (let dy = 0; dy < 100; dy++) {
-    if (grid[[startX, startY + dy]] == 0) {
-      return false;
-    }
-  }
-
-  // check if row x = 0 is all #
-  for (let dx = 0; dx < 100; dx++) {
-    if (grid[[startX + dx, startY]] == 0) {
-      return false;
-    }
-  }
-
   return true;
 };
 

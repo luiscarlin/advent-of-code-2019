@@ -15,8 +15,6 @@ const main = instructions => {
 
       if (output === 1) {
         affectedByBeam++;
-      } else if (output === 0) {
-        // stationary
       }
     }
   }
