@@ -69,8 +69,3 @@ if (require.main === module) {
 }
 
 module.exports = main;
-
-// {
-//   '8,PHBMP':  ['3,JQFM', '5,QMQB'],
-//   '8,PHBMP':  ['3,JQFM', '5,QMQB'],
-// }
