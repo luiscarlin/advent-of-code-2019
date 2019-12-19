@@ -1,5 +1,27 @@
-const main = input => {
-  return input;
+const IntcodeComputer = require('./IntcodeComputer');
+
+const main = instructions => {
+  let output;
+  let affectedByBeam = 0;
+
+  for (let x = 0; x < 50; x++) {
+    for (let y = 0; y < 50; y++) {
+      const computer = new IntcodeComputer(instructions);
+
+      computer.pushToInput(x);
+      computer.pushToInput(y);
+      computer.execute();
+      output = computer.getOutput();
+
+      if (output === 1) {
+        affectedByBeam++;
+      } else if (output === 0) {
+        // stationary
+      }
+    }
+  }
+
+  return affectedByBeam;
 };
 
 if (require.main === module) {
