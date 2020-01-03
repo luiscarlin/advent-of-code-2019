@@ -1,9 +1,29 @@
 const Intcode = require('./IntcodeComputer');
 
+const populateNeighbors = (program, position) => {
+  return {};
+};
+
 const main = input => {
   const program = new Intcode(input);
 
-  console.log(input);
+  // N
+  program.pushToInput(1);
+  program.execute();
+
+  console.log(program.getOutput());
+
+  // S
+  program.pushToInput(2);
+  program.execute();
+
+  console.log(program.getOutput());
+
+  // S
+  program.pushToInput(2);
+  program.execute();
+
+  console.log(program.getOutput());
 
   // find all neighbors
 
