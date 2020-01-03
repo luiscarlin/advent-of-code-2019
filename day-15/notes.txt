@@ -1,0 +1,30 @@
+
+
+when printing: 
+- # for walls
+- D for droid
+- ' ' for unkown
+- . for known
+
+inputs = {
+  north = 1
+  south = 2
+  west = 3
+  east = 4
+}
+
+output = {
+  0 = droid hit a wall (position has not changed)
+  1 = moved one step in the requested direction
+  2 = moved one step in the requested direction and oxigen system found
+}
+
+loop:
+- run intcode with movement command as input
+- robot moves
+- read status from output
+
+goal: find fewest number of steps from start position to oxygen system position
+
+
+
