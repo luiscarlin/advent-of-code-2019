@@ -9,11 +9,18 @@ const WALL = 0;
 const MOVED = 1;
 const MOVED_OXYGEN_FOUND = 2;
 
-const move = (program, direction) => {
+const moveSingle = (program, direction) => {
   program.pushToInput(direction);
   program.execute();
 
   return program.getOutput();
+};
+
+const moveMultiple = (program, directions) => {
+  directions.forEach(direction => {
+    program.pushToInput(direction);
+    program.execute();
+  });
 };
 
 const getOpositeDirection = direction => {
@@ -26,36 +33,81 @@ const getOpositeDirection = direction => {
     : WEST;
 };
 
-const getPossibleDirections = program => {
-  const directions = [NORTH, SOUTH, WEST, EAST];
+const getPossibleDirections = (program, lastMove = 99) => {
+  const directions = [NORTH, SOUTH, WEST, EAST].filter(
+    direction => direction !== lastMove
+  );
+
   let possibleDirections = [];
 
   directions.forEach(direction => {
     const oppositeDirection = getOpositeDirection(direction);
-    const status = move(program, direction);
+    const status = moveSingle(program, direction);
 
     if (status === WALL) {
-      console.log('wall!');
     } else if (status === MOVED) {
-      console.log('moved, so coming back');
       possibleDirections.push(direction);
-      move(program, oppositeDirection);
+      moveSingle(program, oppositeDirection);
     } else if (status === MOVED_OXYGEN_FOUND) {
-      console.log('moved, and found oxygen, coming back');
       possibleDirections.push(direction);
-      move(program, oppositeDirection);
+      moveSingle(program, oppositeDirection);
     }
   });
 
   return possibleDirections;
 };
 
+const undoAll = (program, movements) => {
+  while (movements.length) {
+    const direction = getOpposite(movements.shift());
+
+    moveSingle(program, direction);
+  }
+};
+
 const main = input => {
   const program = new Intcode(input);
+  let branches = [[]];
+  let previousMoves = [];
 
-  const possibleDirections = getPossibleDirections(program);
+  do {
+    const branch = branches.pop();
 
-  console.log(possibleDirections);
+    previousMoves = [...branch];
+
+    if (previousMoves.length) {
+      moveMultiple([...previousMoves]);
+    }
+    do {
+      const possibleDirections = getPossibleDirections(
+        program,
+        previousMoves[0]
+      );
+
+      if (possibleDirections.length === 0) {
+        undoAll(program, [...previousMoves]);
+        break;
+      } else if (possibleDirections.length === 1) {
+        previousMoves.unshift(possibleDirections[0]);
+
+        const status = moveSingle(program, possibleDirections[0]);
+
+        if (status === 2) {
+          console.log('required steps', stack.length);
+        }
+      } else {
+        // store each branch
+        possibleDirections.forEach(direction =>
+          branches.push([direction, ...previousMoves])
+        );
+
+        undoAll(program, [...previousMoves]);
+        break;
+      }
+
+      stack = [...possibleDirections];
+    } while (true);
+  } while (branches.length);
 };
 
 if (require.main === module) {
