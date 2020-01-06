@@ -19,8 +19,8 @@ const moveSingle = (program, direction) => {
 const moveMultiple = (program, directions) => {
   directions.forEach(direction => {
     program.pushToInput(direction);
-    program.execute();
   });
+  program.execute();
 };
 
 const getOpositeDirection = direction => {
@@ -89,7 +89,6 @@ const main = input => {
         previousMoves.unshift(possibleDirections[0]);
 
         const status = moveSingle(program, possibleDirections[0]);
-        console.log(status);
 
         if (status === MOVED_OXYGEN_FOUND) {
           console.log('required steps', previousMoves.length);
