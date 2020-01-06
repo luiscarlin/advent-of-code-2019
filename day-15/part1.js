@@ -1,33 +1,50 @@
 const Intcode = require('./IntcodeComputer');
 
-const populateNeighbors = (program, position) => {
-  return {};
+const NORTH = 1;
+const SOUTH = 2;
+const WEST = 3;
+const EAST = 4;
+
+const move = (program, direction) => {
+  program.pushToInput(direction);
+  program.execute();
+
+  return program.getOutput();
+};
+
+const getOpositeDirection = direction => {
+  return direction === NORTH
+    ? SOUTH
+    : direction === SOUTH
+    ? NORTH
+    : direction === WEST
+    ? EAST
+    : WEST;
+};
+
+const getPossibleDirections = program => {
+  const directions = [NORTH, SOUTH, WEST, EAST];
+  let possibleDirections = [];
+
+  directions.forEach(direction => {
+    const oppositeDirection = getOpositeDirection(direction);
+    const status = move(program, direction);
+
+    if (status === 1) {
+      possibleDirections.push(direction);
+      move(program, oppositeDirection);
+    }
+  });
+
+  return possibleDirections;
 };
 
 const main = input => {
   const program = new Intcode(input);
 
-  // N
-  program.pushToInput(1);
-  program.execute();
+  const possibleDirections = getPossibleDirections(program);
 
-  console.log(program.getOutput());
-
-  // S
-  program.pushToInput(2);
-  program.execute();
-
-  console.log(program.getOutput());
-
-  // S
-  program.pushToInput(2);
-  program.execute();
-
-  console.log(program.getOutput());
-
-  // find all neighbors
-
-  // test out around
+  console.log(possibleDirections);
 };
 
 if (require.main === module) {
