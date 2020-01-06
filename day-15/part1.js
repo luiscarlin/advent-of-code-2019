@@ -5,6 +5,10 @@ const SOUTH = 2;
 const WEST = 3;
 const EAST = 4;
 
+const WALL = 0;
+const MOVED = 1;
+const MOVED_OXYGEN_FOUND = 2;
+
 const move = (program, direction) => {
   program.pushToInput(direction);
   program.execute();
@@ -30,7 +34,14 @@ const getPossibleDirections = program => {
     const oppositeDirection = getOpositeDirection(direction);
     const status = move(program, direction);
 
-    if (status === 1) {
+    if (status === WALL) {
+      console.log('wall!');
+    } else if (status === MOVED) {
+      console.log('moved, so coming back');
+      possibleDirections.push(direction);
+      move(program, oppositeDirection);
+    } else if (status === MOVED_OXYGEN_FOUND) {
+      console.log('moved, and found oxygen, coming back');
       possibleDirections.push(direction);
       move(program, oppositeDirection);
     }
